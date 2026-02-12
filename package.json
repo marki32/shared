@@ -1,7 +1,7 @@
 {
-  "name": "lan-file-share",
+  "name": "landrop",
   "version": "1.0.0",
-  "description": "Local LAN file sharing system",
+  "description": "LanDrop - Fast Offline File Transfer for PC and Mobile",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
