@@ -14,6 +14,21 @@ app.use(express.json());
 // --- State ---
 let sharedItems = []; // Can be files or folders
 
+// Clean uploads directory on startup
+const uploadDir = path.join(__dirname, 'uploads');
+if (fs.existsSync(uploadDir)) {
+    try {
+        fs.readdirSync(uploadDir).forEach(file => {
+            fs.unlinkSync(path.join(uploadDir, file));
+        });
+        console.log('Uploads directory cleared.');
+    } catch (e) {
+        console.error('Failed to clear uploads:', e);
+    }
+} else {
+    fs.mkdirSync(uploadDir);
+}
+
 // --- System API (Admin Only) ---
 
 // 1. Get Drives (Windows specific)
@@ -272,6 +287,63 @@ app.get('/api/qrcode', async (req, res) => {
         res.status(500).json({ error: 'Failed to generate QR' });
     }
 });
+
+const multer = require('multer');
+
+// Configure upload storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadDir = path.join(__dirname, 'uploads');
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir);
+        }
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        // Keep original name, append timestamp to avoid collisions
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, file.originalname); // For now, keep original name for simplicity
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// Upload Endpoint
+app.post('/api/upload', upload.array('files'), (req, res) => {
+    try {
+        res.json({ success: true, count: req.files.length });
+    } catch (err) {
+        res.status(500).json({ error: 'Upload failed' });
+    }
+});
+
+// List Uploaded Files Endpoint
+app.get('/api/uploads', (req, res) => {
+    const uploadDir = path.join(__dirname, 'uploads');
+    if (!fs.existsSync(uploadDir)) {
+        return res.json([]);
+    }
+
+    fs.readdir(uploadDir, (err, files) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to list uploads' });
+        }
+
+        const fileList = files.map(file => {
+            const stats = fs.statSync(path.join(uploadDir, file));
+            return {
+                name: file,
+                size: stats.size,
+                mtime: stats.mtime
+            };
+        });
+
+        res.json(fileList);
+    });
+});
+
+// Serve uploaded files so they can be downloaded
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);

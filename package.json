@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "express": "^4.18.2",
+    "fs-extra": "^11.3.3",
     "mime-types": "^2.1.35",
+    "multer": "^2.0.2",
     "qrcode": "^1.5.4"
   },
   "bin": "server.js",

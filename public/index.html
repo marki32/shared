@@ -31,6 +31,19 @@
                     </svg>
                     <input type="text" placeholder="Search files..." id="search-input">
                 </div>
+
+                <!-- Upload Button -->
+                <button id="upload-btn" class="btn btn-icon" title="Upload Files"
+                    style="background: white; width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: var(--accent-color);">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                </button>
+                <input type="file" id="file-input" multiple style="display: none;">
+
                 <div class="profile-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -106,6 +119,34 @@
                 <button class="btn btn-icon" id="close-image">✕</button>
             </div>
             <img id="image-display" src="" alt="Preview">
+        </div>
+    </div>
+
+    <!-- Upload Progress Modal -->
+    <div id="upload-progress" class="modal-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <div style="margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">Uploading...</div>
+
+            <div style="position: relative; width: 100px; height: 100px; margin: 0 auto;">
+                <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                    <!-- Background Circle -->
+                    <path d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="4" />
+
+                    <!-- Progress Circle -->
+                    <path id="progress-circle" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--accent-color)" stroke-width="4"
+                        stroke-dasharray="0, 100" />
+                </svg>
+                <div id="progress-text"
+                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold;">
+                    0%</div>
+            </div>
+
+            <div id="upload-status" style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">Starting...
+            </div>
         </div>
     </div>
 

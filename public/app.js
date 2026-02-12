@@ -53,6 +53,83 @@ refreshBtn.addEventListener('click', () => {
 closeVideoBtn.addEventListener('click', closeVideo);
 closeImageBtn.addEventListener('click', closeImage);
 
+// Upload Logic
+const uploadBtn = document.getElementById('upload-btn');
+const fileInput = document.getElementById('file-input');
+
+if (uploadBtn) {
+    uploadBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+}
+
+if (fileInput) {
+    fileInput.addEventListener('change', async () => {
+        if (fileInput.files.length === 0) return;
+
+        const formData = new FormData();
+        for (let i = 0; i < fileInput.files.length; i++) {
+            formData.append('files', fileInput.files[i]);
+        }
+
+        // Show simplified uploading state (can improve UI later)
+        // Show Progress Modal
+        const progressModal = document.getElementById('upload-progress');
+        const progressCircle = document.getElementById('progress-circle');
+        const progressText = document.getElementById('progress-text');
+        const uploadStatus = document.getElementById('upload-status');
+
+        if (progressModal) {
+            progressModal.classList.add('active');
+            if (progressCircle) progressCircle.setAttribute('stroke-dasharray', `0, 100`);
+            if (progressText) progressText.textContent = '0%';
+            if (uploadStatus) uploadStatus.textContent = 'Sending files...';
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/upload', true);
+
+        xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable && progressCircle && progressText) {
+                const percentComplete = Math.round((e.loaded / e.total) * 100);
+                progressCircle.setAttribute('stroke-dasharray', `${percentComplete}, 100`);
+                progressText.textContent = percentComplete + '%';
+            }
+        };
+
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                if (uploadStatus) uploadStatus.textContent = 'Upload Complete!';
+                if (progressCircle) progressCircle.setAttribute('stroke-dasharray', `100, 100`);
+                if (progressText) progressText.textContent = '100%';
+
+                setTimeout(() => {
+                    if (progressModal) progressModal.classList.remove('active');
+                    alert('Upload Successful! Files sent to host.');
+                }, 1000);
+            } else {
+                if (uploadStatus) uploadStatus.textContent = 'Upload Failed.';
+                setTimeout(() => {
+                    if (progressModal) progressModal.classList.remove('active');
+                }, 2000);
+            }
+            fileInput.value = ''; // reset
+            uploadBtn.innerHTML = originalText;
+        };
+
+        xhr.onerror = () => {
+            if (uploadStatus) uploadStatus.textContent = 'Network Error.';
+            setTimeout(() => {
+                if (progressModal) progressModal.classList.remove('active');
+            }, 2000);
+            fileInput.value = ''; // reset
+            uploadBtn.innerHTML = originalText;
+        };
+
+        xhr.send(formData);
+    });
+}
+
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         closeVideo();

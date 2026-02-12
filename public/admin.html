@@ -55,8 +55,25 @@
                     </button>
                 </div>
 
-                <div id="browser-list" class="flex-col" style="gap: 0.5rem;">
+                <div id="browser-list" class="flex-col" style="gap: 0.5rem; max-height: 40vh; overflow-y: auto;">
                     <!-- Drives / Files injected here -->
+                </div>
+
+                <div class="card-title"
+                    style="margin-top: 2rem; display: flex; align-items: center; justify-content: space-between;">
+                    Received Files
+                    <button class="btn btn-icon" onclick="loadReceivedFiles()" title="Refresh"
+                        style="width:24px; height:24px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="received-files-list" class="flex-col" style="gap: 0.5rem; max-height: 30vh; overflow-y: auto;">
+                    <div style="padding: 0.5rem 0; color: var(--text-muted); font-size: 0.85rem;">No files received yet.
+                    </div>
                 </div>
             </aside>
 
@@ -332,7 +349,39 @@
             document.getElementById('qr-modal').classList.remove('active');
         }
 
+        async function loadReceivedFiles() {
+            const listContainer = document.getElementById('received-files-list');
+            try {
+                const res = await fetch('/api/uploads');
+                const files = await res.json();
+
+                if (files.length === 0) {
+                    listContainer.innerHTML = '<div style="padding: 0.5rem; color: var(--text-muted); font-size: 0.85rem;">No files received yet.</div>';
+                    return;
+                }
+
+                listContainer.innerHTML = files.map(file => `
+                    <a href="/uploads/${file.name}" download target="_blank" style="text-decoration:none;">
+                        <div class="drive-item">
+                            <span class="drive-icon">📥</span>
+                            <div style="flex:1; overflow:hidden;">
+                                <div class="drive-name" title="${file.name}" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${file.name}</div>
+                                <div style="font-size:0.7rem; color:var(--text-muted);">${formatBytes(file.size)}</div>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+            } catch (e) {
+                console.error("Failed to load received files", e);
+            }
+        }
+
+        // Load received files on startup and every 10 seconds
+        loadReceivedFiles();
+        setInterval(loadReceivedFiles, 10000);
+
         // Close on escape
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeQrModal();
         });
