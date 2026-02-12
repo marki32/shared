@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LanShare - Admin</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Admin Dashboard</span>
+        </div>
+        <div id="connection-box" style="font-size: 0.9rem; color: var(--text-muted);">
+            Checking network...
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="admin-layout">
+            <!-- Left: Sidebar / File Browser -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">My Computer</div>
+                    <div id="breadcrumb" class="breadcrumb" style="padding-left:0; margin-bottom:1rem;">C:\</div>
+
+                    <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem;">
+                        <button id="up-btn" class="btn btn-sm"
+                            style="background:white; border:1px solid var(--border-color);">⬆ Up Level</button>
+                    </div>
+
+                    <div id="browser-list" class="flex-col" style="gap: 0.5rem;">
+                        <!-- Drives / Files injected here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right: Shared Zone -->
+            <main class="shared-zone">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+                    <div class="text-lg">Currently Shared</div>
+                    <div id="shared-count"
+                        style="font-size:0.9rem; color:var(--text-muted); background:var(--bg-color); padding:0.25rem 0.75rem; border-radius:100px;">
+                        0 items
+                    </div>
+                </div>
+
+                <div id="shared-list" class="flex-col" style="gap: 0.75rem; overflow-y:auto; flex:1;">
+                    <!-- Shared items injected here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const browserList = document.getElementById('browser-list');
+        const sharedList = document.getElementById('shared-list');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const upBtn = document.getElementById('up-btn');
+        const connectionBox = document.getElementById('connection-box');
+        const sharedCount = document.getElementById('shared-count');
+
+        let currentPath = '';
+
+        // Init
+        loadConnectionInfo();
+        loadDrives();
+        loadSharedFiles();
+
+        upBtn.addEventListener('click', () => {
+            if (!currentPath) return;
+            // Simple robust up navigation
+            const parent = currentPath.substring(0, currentPath.lastIndexOf('\\'));
+            if (currentPath.endsWith(':\\')) {
+                loadDrives();
+            } else if (parent.length < 3) {
+                loadDrives();
+            } else {
+                browse(parent);
+            }
+        });
+
+        async function loadConnectionInfo() {
+            try {
+                const res = await fetch('/api/ip');
+                const data = await res.json();
+                if (data.ips.length > 0) {
+                    connectionBox.innerHTML = `Receiver: <span style="font-weight:600; color:var(--accent-color)">http://${data.ips[0]}:${data.port}</span>`;
+                } else {
+                    connectionBox.textContent = 'No network detected.';
+                }
+            } catch (e) { connectionBox.textContent = 'Server offline'; }
+        }
+
+        async function loadDrives() {
+            currentPath = '';
+            breadcrumb.textContent = 'My Computer';
+            browserList.innerHTML = '<div class="loading">Loading drives...</div>';
+
+            try {
+                const res = await fetch('/api/system/drives');
+                const drives = await res.json();
+
+                browserList.innerHTML = '';
+                drives.forEach(drive => {
+                    const el = document.createElement('div');
+                    el.className = 'disk-item';
+                    el.innerHTML = `
+                        <div class="file-icon" style="width:32px; height:32px; font-size:1rem;">💾</div> 
+                        <span style="font-weight:500;">${drive}</span>
+                    `;
+                    el.onclick = () => browse(drive + '\\');
+                    browserList.appendChild(el);
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        async function browse(path) {
+            currentPath = path;
+            breadcrumb.textContent = path;
+
+            try {
+                const res = await fetch('/api/system/browse', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path })
+                });
+
+                if (!res.ok) throw new Error();
+
+                const items = await res.json();
+                browserList.innerHTML = '';
+
+                items.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = 'disk-item';
+                    const icon = item.isDirectory ? '📁' : '📄';
+
+                    el.innerHTML = `
+                        <span style="font-size:1.2rem;">${icon}</span> 
+                        <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${item.name}">${item.name}</span>
+                        <button class="btn btn-primary btn-sm" style="padding:0.2rem 0.6rem; font-size:0.75rem;">Share</button>
+                    `;
+
+                    // Click name to navigate folders
+                    if (item.isDirectory) {
+                        el.onclick = (e) => {
+                            // prevent triggering if button clicked (handled by stopPropagation below, but safe measure)
+                            if (e.target.tagName !== 'BUTTON') browse(item.path);
+                        }
+                    }
+
+                    // Click Share
+                    const btn = el.querySelector('button');
+                    btn.onclick = (e) => {
+                        e.stopPropagation();
+                        shareItem(item.path);
+                    };
+
+                    browserList.appendChild(el);
+                });
+            } catch (err) {
+                browserList.innerHTML = '<div style="padding:1rem; color:var(--text-muted); text-align:center;">Empty or Access Denied</div>';
+            }
+        }
+
+        async function shareItem(targetPath) {
+            try {
+                await fetch('/api/share', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ targetPath })
+                });
+                loadSharedFiles();
+            } catch (e) { alert('Failed to share'); }
+        }
+
+        async function loadSharedFiles() {
+            const res = await fetch('/api/files');
+            const files = await res.json();
+
+            sharedCount.textContent = `${files.length} items`;
+            sharedList.innerHTML = '';
+
+            if (files.length === 0) {
+                sharedList.innerHTML = '<div class="empty-state">No shared files.<br>Select from the left to share.</div>';
+                return;
+            }
+
+            files.forEach(file => {
+                const el = document.createElement('div');
+                el.className = 'file-item';
+                // Adjust file item style for list view
+                el.style.marginBottom = '0';
+
+                el.innerHTML = `
+                    <div class="file-icon">
+                        ${file.isDirectory ? '📁' : '📄'}
+                    </div>
+                    <div class="file-details">
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-meta">${file.isDirectory ? 'Folder' : formatBytes(file.size)}</span>
+                    </div>
+                    <button class="btn btn-sm" style="background:#fee2e2; color:#ef4444;">Remove</button>
+                `;
+
+                el.querySelector('button').onclick = async () => {
+                    await fetch(`/api/share/${file.id}`, { method: 'DELETE' });
+                    loadSharedFiles();
+                };
+                sharedList.appendChild(el);
+            });
+        }
+
+        function formatBytes(bytes, decimals = 1) {
+            if (!+bytes) return '0 B';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+    </script>
+</body>
+
+</html>
