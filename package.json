@@ -1,7 +1,7 @@
 {
-  "name": "landrop",
+  "name": "nosherd",
   "version": "1.0.0",
-  "description": "LanDrop - Fast Offline File Transfer for PC and Mobile",
+  "description": "NoSherd - Instant Offline File Sharing (PC to Mobile)",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
