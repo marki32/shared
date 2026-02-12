@@ -129,7 +129,7 @@ app.get('/api/folder/:id', (req, res) => {
 
     // Find the shared folder
     const sharedFolder = sharedItems.find(item => item.id === folderId && item.isDirectory);
-    
+
     if (!sharedFolder) {
         return res.status(404).json({ error: 'Folder not found' });
     }
@@ -158,7 +158,7 @@ app.get('/api/folder/:id', (req, res) => {
             const itemPath = path.join(fullPath, item.name);
             const relativePath = subPath ? path.join(subPath, item.name) : item.name;
             let fileStats = null;
-            
+
             try {
                 fileStats = fs.statSync(itemPath);
             } catch (e) {
@@ -259,4 +259,7 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
     console.log('Admin Dashboard: http://localhost:' + PORT + '/admin.html');
     console.log('Receiver UI: http://localhost:' + PORT);
+
+    // Auto-open browser (Windows specific since we are building for Windows)
+    exec('start http://localhost:' + PORT + '/admin.html');
 });
