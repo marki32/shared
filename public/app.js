@@ -186,8 +186,42 @@ async function loadFolderContents(folderId, subPath = '') {
             fileList.className = '';
             fileList.innerHTML = '<div class="empty-state">This folder is empty</div>';
         } else {
-            fileList.className = 'file-grid';
-            renderFileList(data.items, 'folder', folderId);
+            // Add Download All Button
+            const downloadAllContainer = document.createElement('div');
+            downloadAllContainer.style.padding = '0 0 1rem 0';
+            downloadAllContainer.style.display = 'flex';
+            downloadAllContainer.style.justifyContent = 'flex-end';
+
+            const zipBtn = document.createElement('button');
+            zipBtn.className = 'btn btn-primary';
+            zipBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:0.5rem">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download All (ZIP)
+            `;
+            zipBtn.onclick = () => {
+                const zipUrl = `/api/folder/${folderId}/download-zip${subPath ? '?path=' + encodeURIComponent(subPath) : ''}`;
+                window.location.href = zipUrl;
+            };
+
+            downloadAllContainer.appendChild(zipBtn);
+
+            // Clear list and append header + grid
+            fileList.innerHTML = '';
+            fileList.appendChild(downloadAllContainer);
+
+            const gridContainer = document.createElement('div');
+            gridContainer.className = 'file-grid';
+            fileList.appendChild(gridContainer);
+
+            // Render items into the grid container, NOT fileList directly
+            renderFileListToContainer(data.items, 'folder', folderId, gridContainer);
+
+            // fileList.className = 'file-grid'; // Removed, handling layout manually
+            fileList.className = ''; // Reset class as we have a wrapper now
         }
 
     } catch (err) {
@@ -198,8 +232,13 @@ async function loadFolderContents(folderId, subPath = '') {
 
 // Render file list
 function renderFileList(items, viewType, folderId = null) {
+    // Legacy support for calls that don't pass a container
     fileList.innerHTML = '';
+    const container = fileList;
+    renderFileListToContainer(items, viewType, folderId, container);
+}
 
+function renderFileListToContainer(items, viewType, folderId, container) {
     items.forEach(item => {
         const card = document.createElement('div');
         card.className = 'file-item';
@@ -259,8 +298,9 @@ function renderFileList(items, viewType, folderId = null) {
             }
         }
 
-        fileList.appendChild(card);
+        container.appendChild(card);
     });
+}
 }
 
 // Update breadcrumb navigation

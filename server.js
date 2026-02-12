@@ -235,6 +235,69 @@ app.get('/api/folder/:id/download', (req, res) => {
     res.sendFile(fullPath, { headers: { 'Content-Type': mimeType } });
 });
 
+const archiver = require('archiver');
+
+// ... (existing code)
+
+// Download folder as ZIP
+app.get('/api/folder/:id/download-zip', (req, res) => {
+    const folderId = req.params.id;
+    const subPath = req.query.path || '';
+
+    // Find the shared folder
+    const sharedFolder = sharedItems.find(item => item.id === folderId && item.isDirectory);
+
+    if (!sharedFolder) {
+        return res.status(404).json({ error: 'Folder not found' });
+    }
+
+    try {
+        const fullPath = subPath ? path.join(sharedFolder.path, subPath) : sharedFolder.path;
+
+        // Security check
+        const resolvedPath = path.resolve(fullPath);
+        const resolvedBase = path.resolve(sharedFolder.path);
+        if (!resolvedPath.startsWith(resolvedBase)) {
+            return res.status(403).json({ error: 'Access denied' });
+        }
+
+        if (!fs.existsSync(fullPath)) {
+            return res.status(404).json({ error: 'Path not found' });
+        }
+
+        const stats = fs.statSync(fullPath);
+        if (!stats.isDirectory()) {
+            return res.status(400).json({ error: 'Not a directory' });
+        }
+
+        // Set headers for zip download
+        const folderName = subPath ? path.basename(subPath) : sharedFolder.name;
+        res.attachment(`${folderName}.zip`);
+
+        // Create zip archive
+        const archive = archiver('zip', {
+            zlib: { level: 9 } // Sets the compression level.
+        });
+
+        // Pipe archive data to the response
+        archive.pipe(res);
+
+        // Append directory contents
+        archive.directory(fullPath, false);
+
+        // Finalize the archive (ie we are done appending files but streams have to finish yet)
+        archive.finalize();
+
+        // Handle errors
+        archive.on('error', (err) => {
+            res.status(500).send({ error: err.message });
+        });
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // Download standalone shared file
 app.get('/api/download/:id', (req, res) => {
     const fileId = req.params.id;
