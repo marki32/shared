@@ -12,16 +12,30 @@
     <!-- Header -->
     <header class="app-header">
         <div class="logo">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
-            </svg>
-            <span>Admin Dashboard</span>
+            <span>LanShare</span>
         </div>
-        <div id="connection-box" style="font-size: 0.9rem; color: var(--text-muted);">
-            Checking network...
+
+        <div id="connection-box" class="status-badge">
+            <div class="status-dot"></div>
+            <span>Checking...</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="search-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" placeholder="Search" id="search-input">
+            </div>
+            <div class="profile-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </div>
         </div>
     </header>
 
@@ -29,27 +43,25 @@
         <div class="admin-layout">
             <!-- Left: Sidebar / File Browser -->
             <aside class="sidebar">
-                <div class="sidebar-section">
-                    <div class="sidebar-title">My Computer</div>
-                    <div id="breadcrumb" class="breadcrumb" style="padding-left:0; margin-bottom:1rem;">C:\</div>
+                <div class="card-title">My Drives</div>
 
-                    <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem;">
-                        <button id="up-btn" class="btn btn-sm"
-                            style="background:white; border:1px solid var(--border-color);">⬆ Up Level</button>
-                    </div>
+                <div style="margin-bottom: 1rem;">
+                    <button id="up-btn" class="btn btn-up">
+                        Before: <span id="breadcrumb" style="margin-left:5px; font-weight:600;">C:\</span>
+                    </button>
+                </div>
 
-                    <div id="browser-list" class="flex-col" style="gap: 0.5rem;">
-                        <!-- Drives / Files injected here -->
-                    </div>
+                <div id="browser-list" class="flex-col" style="gap: 0.5rem;">
+                    <!-- Drives / Files injected here -->
                 </div>
             </aside>
 
             <!-- Right: Shared Zone -->
             <main class="shared-zone">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-                    <div class="text-lg">Currently Shared</div>
+                <div class="card-title">
+                    Currently Shared
                     <div id="shared-count"
-                        style="font-size:0.9rem; color:var(--text-muted); background:var(--bg-color); padding:0.25rem 0.75rem; border-radius:100px;">
+                        style="font-size:0.85rem; background:var(--bg-color); padding:0.25rem 0.75rem; border-radius:100px; color:var(--text-muted); font-weight:normal;">
                         0 items
                     </div>
                 </div>
@@ -114,9 +126,15 @@
                 drives.forEach(drive => {
                     const el = document.createElement('div');
                     el.className = 'disk-item';
+                    // SVG Icon for Hard Drive
+                    const driveIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>`;
+
                     el.innerHTML = `
-                        <div class="file-icon" style="width:32px; height:32px; font-size:1rem;">💾</div> 
-                        <span style="font-weight:500;">${drive}</span>
+                        <div class="icon-box" style="background:white; color:#111; border:1px solid rgba(0,0,0,0.05); box-shadow: 0 2px 4px rgba(0,0,0,0.02);">${driveIcon}</div>
+                        <div class="item-info">
+                            <span class="item-name">${drive} Local Disk</span>
+                            <span class="item-meta">Ready</span>
+                        </div>
                     `;
                     el.onclick = () => browse(drive + '\\');
                     browserList.appendChild(el);
@@ -143,12 +161,33 @@
                 items.forEach(item => {
                     const el = document.createElement('div');
                     el.className = 'disk-item';
-                    const icon = item.isDirectory ? '📁' : '📄';
+
+                    // Icons matching the reference image style (Black outline, soft bg)
+                    let iconHtml = '';
+                    if (item.isDirectory) {
+                        // Folder Icon
+                        iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`;
+                    } else if (item.name.match(/\.(mp4|mkv|avi|mov)$/i)) {
+                        // Video Film Strip Icon
+                        iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`;
+                    } else if (item.name.match(/\.(png|jpg|jpeg|gif|webp)$/i)) {
+                        // Image Icon
+                        iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`;
+                    } else if (item.name.match(/\.(mp3|wav|ogg)$/i)) {
+                        // Music Note Icon
+                        iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
+                    } else {
+                        // Document / Generic File Icon
+                        iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
+                    }
 
                     el.innerHTML = `
-                        <span style="font-size:1.2rem;">${icon}</span> 
-                        <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${item.name}">${item.name}</span>
-                        <button class="btn btn-primary btn-sm" style="padding:0.2rem 0.6rem; font-size:0.75rem;">Share</button>
+                        <div class="icon-box">${iconHtml}</div>
+                        <div class="item-info">
+                            <span class="item-name" title="${item.name}">${item.name}</span>
+                            <span class="item-meta">${item.isDirectory ? 'Folder' : 'File'}</span>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Share</button>
                     `;
 
                     // Click name to navigate folders
@@ -199,18 +238,28 @@
             files.forEach(file => {
                 const el = document.createElement('div');
                 el.className = 'file-item';
-                // Adjust file item style for list view
-                el.style.marginBottom = '0';
+
+                // Icons matching the reference image style
+                let iconHtml = '';
+                if (file.isDirectory) {
+                    iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`;
+                } else if (file.type && file.type.startsWith('video')) {
+                    iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`;
+                } else if (file.type && file.type.startsWith('image')) {
+                    iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`;
+                } else if (file.type && file.type.startsWith('audio')) {
+                    iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
+                } else {
+                    iconHtml = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
+                }
 
                 el.innerHTML = `
-                    <div class="file-icon">
-                        ${file.isDirectory ? '📁' : '📄'}
+                    <div class="icon-box">${iconHtml}</div>
+                    <div class="item-info">
+                        <span class="item-name">${file.name}</span>
+                        <span class="item-meta">${file.isDirectory ? 'Shared Folder' : formatBytes(file.size)}</span>
                     </div>
-                    <div class="file-details">
-                        <span class="file-name">${file.name}</span>
-                        <span class="file-meta">${file.isDirectory ? 'Folder' : formatBytes(file.size)}</span>
-                    </div>
-                    <button class="btn btn-sm" style="background:#fee2e2; color:#ef4444;">Remove</button>
+                    <button class="btn btn-remove">Remove</button>
                 `;
 
                 el.querySelector('button').onclick = async () => {
@@ -219,6 +268,14 @@
                 };
                 sharedList.appendChild(el);
             });
+        }
+
+        function getIconType(mime, isDir) {
+            if (isDir) return 'type-folder';
+            if (!mime) return '';
+            if (mime.startsWith('video')) return 'type-video';
+            if (mime.startsWith('image')) return 'type-image';
+            return 'type-doc';
         }
 
         function formatBytes(bytes, decimals = 1) {

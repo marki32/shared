@@ -11,33 +11,56 @@
 <body>
     <div class="container">
         <!-- Header -->
+        <!-- Header -->
         <header class="app-header">
             <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
                 <span>LanShare</span>
             </div>
-            <button class="btn btn-icon" id="refresh-btn" title="Refresh">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="23 4 23 10 17 10"></polyline>
-                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                </svg>
-            </button>
+
+            <div id="connection-box" class="status-badge">
+                <div class="status-dot"></div>
+                <span>Receiver Mode</span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="search-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" placeholder="Search files..." id="search-input">
+                </div>
+                <div class="profile-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+            </div>
+            <!-- Refresh Button hidden in menu or auto-refresh, kept simple for now -->
         </header>
 
         <!-- Main Content -->
-        <main>
-            <div class="text-lg" style="margin-bottom: 0.5rem;">Files Shared With You</div>
-            <div class="breadcrumb" id="breadcrumb">
-                <span class="breadcrumb-item active">Home</span>
+        <main class="card" style="min-height: 80vh;">
+            <div class="card-title">
+                <div>Files Shared With You</div>
+                <div class="breadcrumb" id="breadcrumb"
+                    style="font-size: 0.9rem; font-weight: normal; margin-left: auto;">
+                    <span class="breadcrumb-item active">Home</span>
+                </div>
+                <button class="btn btn-icon" id="refresh-btn" title="Refresh"
+                    style="margin-left: 1rem; background: #F4F4F5; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                    </svg>
+                </button>
             </div>
 
-            <div id="file-list" class="file-grid">
+            <div id="file-list" class="file-grid" style="margin-top: 1rem;">
                 <!-- Content injected by app.js -->
                 <div class="loading">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

@@ -127,20 +127,27 @@ function renderFileList(items, viewType, folderId = null) {
         const card = document.createElement('div');
         card.className = 'file-item';
 
-        const icon = getFileIcon(item);
+        const icon = getFileIcon(item); // Returns SVG HTML now
         const size = item.isDirectory ? (item.itemsCount ? item.itemsCount + ' items' : 'Folder') : formatBytes(item.size);
         const isVideo = item.type && item.type.startsWith('video/');
         const isImage = item.type && item.type.startsWith('image/');
 
-        // Card HTML
+        // Card HTML (Soft UI)
+        let actionBtn = '';
+        if (!item.isDirectory) {
+            if (isVideo) actionBtn = `<button class="btn btn-primary btn-sm" style="padding:0.4rem 0.8rem;">Play</button>`;
+            else if (isImage) actionBtn = `<button class="btn btn-primary btn-sm" style="padding:0.4rem 0.8rem;">View</button>`;
+            else actionBtn = `<button class="btn btn-primary btn-sm" style="padding:0.4rem 0.8rem;">Download</button>`;
+        }
+
         card.innerHTML = `
-            <div class="file-icon">${icon}</div>
-            <div class="file-details">
-                <span class="file-name" title="${item.name}">${item.name}</span>
-                <span class="file-meta">${size}</span>
+            <div class="icon-box" style="background:${item.isDirectory ? '#FFF7ED' : '#F4F4F5'}; color:${item.isDirectory ? '#C2410C' : '#52525B'}">${icon}</div>
+            <div class="item-info">
+                <span class="item-name" title="${item.name}">${item.name}</span>
+                <span class="item-meta">${size}</span>
             </div>
             <div class="file-actions">
-                ${!item.isDirectory ? `<button class="btn btn-icon btn-sm" title="Download">⬇</button>` : ''}
+                ${actionBtn}
             </div>
         `;
 
@@ -292,17 +299,23 @@ function closeImage() {
 
 // Get file icon
 function getFileIcon(item) {
-    if (item.isDirectory) return '📁';
+    if (item.isDirectory) {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>`;
+    }
 
     const type = item.type || '';
-    if (type.startsWith('video/')) return '🎬';
-    if (type.startsWith('image/')) return '🖼️';
-    if (type.startsWith('audio/')) return '🎵';
-    if (type.includes('pdf')) return '📕';
-    if (type.includes('zip') || type.includes('rar') || type.includes('7z')) return '📦';
-    if (type.includes('word') || type.includes('document')) return '📝';
-    if (type.includes('excel') || type.includes('spreadsheet')) return '📊';
-    return '📄';
+    if (type.startsWith('video/')) {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`;
+    }
+    if (type.startsWith('image/')) {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`;
+    }
+    if (type.startsWith('audio/')) {
+        return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
+    }
+
+    // Default Document
+    return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
 }
 
 // Format bytes
