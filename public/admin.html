@@ -29,13 +29,17 @@
                 </svg>
                 <input type="text" placeholder="Search" id="search-input">
             </div>
-            <div class="profile-icon">
+            <button onclick="showQrCode()"
+                style="background:white; color:var(--text-main); display:flex; gap:0.5rem; align-items:center; padding:0.5rem 1rem; border-radius:100px; border:none; box-shadow: 0 2px 8px rgba(0,0,0,0.02); cursor:pointer; margin-left:1rem;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
                 </svg>
-            </div>
+                <span style="font-weight:600; font-size:0.9rem;">Connect Mobile</span>
+            </button>
         </div>
     </header>
 
@@ -286,6 +290,52 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
         }
+    </script>
+    <!-- QR Code Modal -->
+    <div id="qr-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="card-title" style="margin:0;">Connect Mobile</span>
+                <button class="btn btn-icon" onclick="closeQrModal()">✕</button>
+            </div>
+            <div style="padding: 1rem; background: white; border-radius: 16px; margin: 1rem auto;">
+                <img id="qr-image" src="" alt="QR Code" style="width: 100%; max-width: 250px; display: block;">
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.9rem;">
+                Scan with your phone to connect instantly.<br>
+                <span id="qr-url" style="color: var(--text-main); font-weight: 600;">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ... existing script ...
+
+        async function showQrCode() {
+            const modal = document.getElementById('qr-modal');
+            const img = document.getElementById('qr-image');
+            const urlSpan = document.getElementById('qr-url');
+
+            modal.classList.add('active');
+
+            try {
+                const res = await fetch('/api/qrcode');
+                const data = await res.json();
+                img.src = data.qr;
+                urlSpan.textContent = data.url;
+            } catch (e) {
+                urlSpan.textContent = "Error loading QR";
+            }
+        }
+
+        function closeQrModal() {
+            document.getElementById('qr-modal').classList.remove('active');
+        }
+
+        // Close on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeQrModal();
+        });
     </script>
 </body>
 

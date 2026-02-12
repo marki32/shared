@@ -251,8 +251,26 @@ function getLocalIPs() {
     return ips;
 }
 
+const QRCode = require('qrcode');
+
+// ... existing code ...
+
 app.get('/api/ip', (req, res) => {
     res.json({ ips: getLocalIPs(), port: PORT });
+});
+
+// QR Code Endpoint
+app.get('/api/qrcode', async (req, res) => {
+    try {
+        const ips = getLocalIPs();
+        const ip = ips.length > 0 ? ips[0] : 'localhost';
+        const url = `http://${ip}:${PORT}`;
+
+        const qrDataImage = await QRCode.toDataURL(url);
+        res.json({ qr: qrDataImage, url: url });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to generate QR' });
+    }
 });
 
 app.listen(PORT, '0.0.0.0', () => {
