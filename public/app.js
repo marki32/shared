@@ -301,7 +301,6 @@ function renderFileListToContainer(items, viewType, folderId, container) {
         container.appendChild(card);
     });
 }
-}
 
 // Update breadcrumb navigation
 function updateBreadcrumb(folderName = '', subPath = '') {
