@@ -1,30 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Outfit:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
 
 :root {
-    /* WisprFlow "Warm Light" Palette */
+    /* WisprFlow Exact Match Palette */
     --bg-color: #FEFCF6;
-    /* Cream / Warm White */
+    /* Cream Base */
     --surface-color: #ffffff;
     --surface-border: #E5E5E0;
     --surface-hover: #F7F7F2;
 
     --text-primary: #1A1A18;
-    /* Soft Black */
+    /* Black */
     --text-secondary: #5C5C59;
-    --text-muted: #9CA3AF;
+    /* Dark Grey */
+    --text-faded: #9CA3AF;
+    /* Light Grey for "Don't type" */
 
-    --accent-purple: #E6D6FF;
-    /* Soft Purple Pill */
-    --accent-purple-text: #5B21B6;
+    --accent-purple: #E9D5FF;
+    /* Pale Purple Button Background */
+    --accent-purple-border: #1A1A18;
+    /* Black Border for Purple Button */
 
-    --radius-pill: 100px;
-    --radius-lg: 24px;
-    --radius-md: 16px;
+    --radius-pill: 12px;
+    /* The buttons in screenshot aren't fully round pills, they are rounded rects */
+    --radius-nav: 100px;
+    /* Nav itself is fully rounded */
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(180deg, #FEFCF6 0%, #FFFFFF 100%);
-    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-    --shadow-nav: 0 8px 30px -10px rgba(0, 0, 0, 0.08);
+    --shadow-nav: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -44,18 +45,24 @@ body {
 }
 
 /* Typography Overrides */
-h1,
+h1 {
+    font-family: 'Newsreader', serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    /* Lighter weight for that editorial look */
+    letter-spacing: -0.02em;
+}
+
 h2,
 h3,
 h4,
 .logo {
     font-family: 'Figtree', sans-serif;
-    letter-spacing: -0.03em;
     color: var(--text-primary);
 }
 
 p {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Figtree', sans-serif;
     font-weight: 400;
 }
 
@@ -72,76 +79,154 @@ p {
 nav {
     display: flex;
     justify-content: center;
-    /* Centered pill */
     padding: 2rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
     pointer-events: none;
-    /* Let clicks pass through outside the pill */
 }
 
 .nav-pill {
     pointer-events: auto;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
     border: 1px solid var(--surface-border);
-    border-radius: var(--radius-pill);
+    /* Subtle border */
+    border-radius: var(--radius-nav);
     padding: 0.5rem 0.75rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     box-shadow: var(--shadow-nav);
     margin: 0 1rem;
 }
 
 .logo {
     font-weight: 800;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     color: var(--text-primary);
     padding-left: 1rem;
     padding-right: 2rem;
-    border-right: 1px solid var(--surface-border);
 }
 
 .nav-links {
     display: flex;
-    gap: 1.5rem;
-    font-size: 0.9rem;
+    gap: 2rem;
+    /* Wider spacing */
+    font-size: 0.95rem;
     color: var(--text-secondary);
     font-weight: 500;
     align-items: center;
-    padding-right: 1.5rem;
+    margin-right: auto;
+    /* Push buttons to the right */
 }
 
-.nav-links a:hover {
+.nav-links a {
+    text-decoration: none;
     color: var(--text-primary);
 }
 
-/* Special Button Style for "Download" inside Nav */
-.btn-nav-download {
-    background: var(--accent-purple) !important;
-    color: var(--accent-purple-text) !important;
-    padding: 0.5rem 1.25rem !important;
+.nav-links a:hover {
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Nav Actions Group */
+.nav-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding-left: 1.5rem;
+    border-left: 1px solid var(--surface-border);
+}
+
+/* --- Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 1.5rem;
     border-radius: var(--radius-pill);
+    /* Rounded Rect, not full pill */
     font-weight: 600;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+}
+
+/* Purple Primary Button */
+.btn-primary {
+    background: var(--accent-purple);
+    color: #000;
+    border: 1.5px solid var(--text-primary);
+    /* Black border */
+    box-shadow: 2px 2px 0px var(--text-primary);
+    /* Hard shadow */
+}
+
+.btn-primary:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px var(--text-primary);
+}
+
+.btn-primary:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--text-primary);
+}
+
+/* Outline / Secondary Button */
+.btn-secondary {
+    background: transparent;
+    border: 1.5px solid var(--text-primary);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* Nav-specific button overrides */
+.btn-nav-outline {
+    padding: 0.5rem 1.2rem;
+    border: 1.5px solid var(--text-primary);
+    border-radius: var(--radius-pill);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
     font-size: 0.9rem;
+}
+
+.btn-nav-primary {
+    /* Duplicated from .btn-primary since @extend is not supported in vanilla CSS */
+    background: var(--accent-purple);
+    color: #000;
+    border: 1.5px solid var(--text-primary);
+    box-shadow: 2px 2px 0px var(--text-primary);
+
+    padding: 0.5rem 1.2rem !important;
+    border-radius: var(--radius-pill) !important;
+    font-size: 0.9rem !important;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-left: auto;
-    transition: transform 0.2s ease;
-    text-decoration: none;
 }
 
-.btn-nav-download:hover {
-    transform: translateY(-1px);
-    filter: brightness(0.95);
+.btn-nav-primary:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0px var(--text-primary);
+}
+
+.btn-nav-primary:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px var(--text-primary);
 }
 
 /* --- Hero Section --- */
@@ -152,86 +237,68 @@ nav {
 }
 
 .hero h1 {
-    font-size: 4.5rem;
-    font-weight: 800;
+    font-size: 5rem;
+    /* Larger */
+    font-weight: 400;
+    /* Serif regular */
     margin-bottom: 1.5rem;
-    background: none;
-    background-clip: unset;
-    -webkit-background-clip: unset;
-    -webkit-text-fill-color: var(--text-primary);
     line-height: 1.1;
-    text-shadow: none;
+    color: var(--text-primary);
+}
+
+/* Style for "Don't type," (faded) and "just speak" (black) */
+.hero-text-faded {
+    color: #9CA3AF;
+    /* Light Grey */
+}
+
+.hero-text-bold {
+    color: #1A1A18;
+    /* Black */
+    /* font-style: italic;  Optional: if we want the "just speak" to be italic like some variants, but screenshot looks straight regular serif. */
 }
 
 .hero p {
-    font-size: 1.35rem;
-    color: var(--text-secondary);
-    max-width: 640px;
-    margin: 0 auto 3rem;
-    line-height: 1.6;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    /* Darker than before */
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.5;
+    font-weight: 500;
 }
 
-/* --- Buttons --- */
 .cta-group {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    margin-bottom: 4rem;
 }
 
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.9rem 2rem;
-    border-radius: var(--radius-pill);
-    font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    font-size: 1rem;
-    cursor: pointer;
-    border: 1px solid transparent;
-    text-decoration: none;
-}
-
-.btn-primary {
-    background: var(--text-primary);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    background: #000;
-}
-
-.btn-secondary {
-    background: #fff;
-    border: 1px solid var(--surface-border);
-    color: var(--text-primary);
-}
-
-.btn-secondary:hover {
-    background: var(--surface-hover);
-    border-color: #d1d5db;
+/* Android Icon */
+.icon-android {
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
 }
 
 /* --- App Preview (Clean Mockup) --- */
 .preview-container {
     perspective: 1200px;
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-bottom: 8rem;
 }
 
 .app-preview {
     background: #fff;
-    border-radius: var(--radius-lg);
+    border-radius: 20px;
     box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.05),
-        0 20px 60px -10px rgba(0, 0, 0, 0.08),
-        0 40px 100px -20px rgba(50, 50, 93, 0.1);
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    /* Softer shadow */
     overflow: hidden;
-    transform: rotateX(2deg) scale(0.98);
-    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    /* transform: rotateX(2deg) scale(0.98); Removed 3D tilt for cleaner look matching the flat style */
     max-width: 1040px;
     margin: 0 auto;
     position: relative;
