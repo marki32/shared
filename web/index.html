@@ -16,23 +16,37 @@
 <body>
 
     <!-- Background Elements -->
-    <div class="glow-bg"></div>
-    <div class="glow-purple"></div>
+    <div class="glow-bg"
+        style="background: radial-gradient(circle, rgba(230, 214, 255, 0.4) 0%, rgba(255,255,255,0) 70%);"></div>
+    <div class="glow-purple"
+        style="background: radial-gradient(circle, rgba(255, 200, 100, 0.15) 0%, rgba(255,255,255,0) 70%);"></div>
 
     <div class="container">
+
+        <!-- Floating Pill Navigation -->
         <nav>
-            <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                NoSherd
-            </div>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How it Works</a>
+            <div class="nav-pill">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    NoSherd
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Product</a>
+                    <a href="#how-it-works">Resources</a>
+                    <a href="#use-cases">Use Cases</a>
+                </div>
+                <a href="NoSherd.zip" class="btn-nav-download" download>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    </svg>
+                    Download for Windows
+                </a>
             </div>
         </nav>
 
@@ -42,21 +56,21 @@
                 sharing over your local WiFi.</p>
 
             <div class="cta-group">
-                <a href="NoSherd.zip" class="btn btn-primary" download>Download for Windows</a>
+                <a href="NoSherd.zip" class="btn btn-primary" download>Download NoSherd for Windows</a>
                 <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
 
             <div class="preview-container">
                 <div class="app-preview">
-                    <!-- HTML-based Mockup of the App with Glassmorphism -->
+                    <!-- HTML-based Mockup of the App with Light Mode Theme -->
                     <div class="mock-window"
-                        style="background: #020408; font-family: 'Figtree', sans-serif; display: flex; flex-direction: column; height: 600px; text-align: left; position: relative;">
+                        style="background: #F8F9FA; font-family: 'Figtree', sans-serif; display: flex; flex-direction: column; height: 600px; text-align: left; position: relative;">
 
                         <!-- Mock Header -->
                         <div
-                            style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                            <div style="display: flex; gap: 0.75rem; color: #f1f5f9; font-weight: 600;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" style="color: #3b82f6;" fill="none"
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid #E5E7EB; background: #fff;">
+                            <div style="display: flex; gap: 0.75rem; color: #111; font-weight: 700;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" style="color: #5B21B6;" fill="none"
                                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
                                     stroke-linejoin="round">
                                     <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
@@ -66,9 +80,9 @@
                                 <span>NoSherd Admin</span>
                             </div>
                             <div
-                                style="font-size: 0.85rem; color: #94a3b8; background: rgba(255,255,255,0.05); padding: 0.3rem 0.8rem; border-radius: 100px;">
-                                <span style="color: #22c55e;">●</span> Connected: <span style="color: #f1f5f9;">Pixel 8
-                                    Pro</span>
+                                style="font-size: 0.85rem; color: #6B7280; background: #F3F4F6; padding: 0.3rem 0.8rem; border-radius: 100px; border: 1px solid #E5E7EB;">
+                                <span style="color: #10B981;">●</span> Connected: <span
+                                    style="color: #374151; font-weight: 500;">Pixel 8 Pro</span>
                             </div>
                         </div>
 
@@ -78,25 +92,25 @@
 
                             <!-- Mock Sidebar -->
                             <div
-                                style="width: 260px; background: rgba(255,255,255,0.02); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 0.5rem;">
+                                style="width: 260px; background: #fff; border-radius: 16px; padding: 1.5rem; border: 1px solid #E5E7EB; display: flex; flex-direction: column; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);">
                                 <div
-                                    style="font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+                                    style="font-size: 0.75rem; text-transform: uppercase; color: #9CA3AF; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
                                     Drives</div>
                                 <div
-                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 1rem; background:rgba(59, 130, 246, 0.1); border-radius:8px; font-size:0.9rem; color:#f1f5f9; border: 1px solid rgba(59, 130, 246, 0.2);">
+                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 1rem; background:#F5F3FF; border-radius:8px; font-size:0.9rem; color:#5B21B6; border: 1px solid #DDD6FE; font-weight: 600;">
                                     <span>💾</span> Local Disk (C:)
                                 </div>
                                 <div
-                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 1rem; border-radius:8px; font-size:0.9rem; color:#94a3b8;">
+                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 1rem; border-radius:8px; font-size:0.9rem; color:#4B5563;">
                                     <span>💾</span> Data (D:)
                                 </div>
 
                                 <div
-                                    style="margin-top:auto; padding:1.2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); border-radius:16px; border: 1px solid rgba(255,255,255,0.05);">
-                                    <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.5rem;">Storage</div>
+                                    style="margin-top:auto; padding:1.2rem; background: #FAFAFA; border-radius:16px; border: 1px solid #E5E7EB;">
+                                    <div style="font-size:0.8rem; color:#6B7280; margin-bottom:0.5rem;">Storage</div>
                                     <div
-                                        style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; overflow: hidden;">
-                                        <div style="width: 65%; height: 100%; background: #3b82f6;"></div>
+                                        style="height: 6px; background: #E5E7EB; border-radius: 100px; overflow: hidden;">
+                                        <div style="width: 65%; height: 100%; background: #8B5CF6;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -105,9 +119,9 @@
                             <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
                                 <!-- File 1 -->
                                 <div
-                                    style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: #fff; border: 1px solid #E5E7EB; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                                     <div
-                                        style="width: 48px; height: 48px; background: rgba(245, 158, 11, 0.1); color: #fbbf24; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                                        style="width: 48px; height: 48px; background: #FFF7ED; color: #C2410C; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #FFEDD5;">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round">
@@ -117,17 +131,17 @@
                                         </svg>
                                     </div>
                                     <div style="flex: 1;">
-                                        <div style="font-weight: 500; color: #f1f5f9;">Project_Assets</div>
-                                        <div style="font-size: 0.8em; color: #64748b;">Folder • 24 items</div>
+                                        <div style="font-weight: 600; color: #111827;">Project_Assets</div>
+                                        <div style="font-size: 0.8em; color: #6B7280;">Folder • 24 items</div>
                                     </div>
-                                    <div style="color: #3b82f6; font-size: 0.9rem; font-weight: 500;">Shared</div>
+                                    <div style="color: #8B5CF6; font-size: 0.9rem; font-weight: 600;">Shared</div>
                                 </div>
 
                                 <!-- File 2 -->
                                 <div
-                                    style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: #fff; border: 1px solid #E5E7EB; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                                     <div
-                                        style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); color: #60a5fa; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                                        style="width: 48px; height: 48px; background: #EFF6FF; color: #2563EB; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid #DBEAFE;">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round">
@@ -138,41 +152,26 @@
                                         </svg>
                                     </div>
                                     <div style="flex: 1;">
-                                        <div style="font-weight: 500; color: #f1f5f9;">4K_Footage_Raw.mp4</div>
-                                        <div style="font-size: 0.8em; color: #64748b;">Video • 4.2 GB</div>
+                                        <div style="font-weight: 600; color: #111827;">4K_Footage_Raw.mp4</div>
+                                        <div style="font-size: 0.8em; color: #6B7280;">Video • 4.2 GB</div>
                                     </div>
-                                    <div style="color: #3b82f6; font-size: 0.9rem; font-weight: 500;">Shared</div>
+                                    <div style="color: #8B5CF6; font-size: 0.9rem; font-weight: 600;">Shared</div>
                                 </div>
 
                                 <!-- Uploading Status -->
                                 <div
-                                    style="margin-top: auto; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 1rem; display: flex; align-items: center; gap: 1rem;">
+                                    style="margin-top: auto; background: #F5F3FF; border: 1px solid #DDD6FE; border-radius: 16px; padding: 1rem; display: flex; align-items: center; gap: 1rem;">
                                     <div
-                                        style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid rgba(59, 130, 246, 0.3); border-top-color: #3b82f6; animation: spin 1s linear infinite;">
+                                        style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid #DDD6FE; border-top-color: #8B5CF6; animation: spin 1s linear infinite;">
                                     </div>
                                     <div>
-                                        <div style="font-size: 0.9rem; color: #f1f5f9; font-weight: 500;">Uploading
-                                            "Design_Mockup.psd"...</div>
-                                        <div style="font-size: 0.8rem; color: #94a3b8;">45 MB / 120 MB • 15 MB/s</div>
+                                        </style>
+
                                     </div>
                                 </div>
-                                <style>
-                                    @keyframes spin {
-                                        0% {
-                                            transform: rotate(0deg);
-                                        }
-
-                                        100% {
-                                            transform: rotate(360deg);
-                                        }
-                                    }
-                                </style>
-
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
         </section>
 
         <section id="features" class="features">
