@@ -15,7 +15,7 @@ app.use(express.json());
 let sharedItems = []; // Can be files or folders
 
 // Clean uploads directory on startup
-const uploadDir = path.join(__dirname, 'uploads');
+const uploadDir = path.join(process.cwd(), 'uploads');
 if (fs.existsSync(uploadDir)) {
     try {
         fs.readdirSync(uploadDir).forEach(file => {
@@ -356,7 +356,7 @@ const multer = require('multer');
 // Configure upload storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const uploadDir = path.join(__dirname, 'uploads');
+        const uploadDir = path.join(process.cwd(), 'uploads');
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir);
         }
@@ -382,7 +382,7 @@ app.post('/api/upload', upload.array('files'), (req, res) => {
 
 // List Uploaded Files Endpoint
 app.get('/api/uploads', (req, res) => {
-    const uploadDir = path.join(__dirname, 'uploads');
+    const uploadDir = path.join(process.cwd(), 'uploads');
     if (!fs.existsSync(uploadDir)) {
         return res.json([]);
     }
@@ -406,10 +406,12 @@ app.get('/api/uploads', (req, res) => {
 });
 
 // Serve uploaded files so they can be downloaded
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
+    console.log(`Working Directory: ${process.cwd()}`);
+    console.log(`Uploads Directory: ${path.join(process.cwd(), 'uploads')}`);
     console.log('Admin Dashboard: http://localhost:' + PORT + '/admin.html');
     console.log('Receiver UI: http://localhost:' + PORT);
 
