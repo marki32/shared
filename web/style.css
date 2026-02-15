@@ -324,73 +324,77 @@ nav {
     pointer-events: none;
 }
 
-/* --- Bento Grid / Features --- */
+/* --- Features Section (Refined) --- */
 .features {
     padding: 6rem 0;
-    border-top: 1px solid var(--surface-border);
-    background: linear-gradient(180deg, transparent 0%, rgba(2, 4, 8, 0.5) 100%);
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .features h2 {
+    font-family: 'Figtree', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 4rem;
-    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+    margin-bottom: 5rem;
+    letter-spacing: -0.02em;
 }
 
-.grid {
+.features-header-faded {
+    color: #E2E8F0;
+    /* Very light grey for "Everything you need" */
+}
+
+.features-header-bold {
+    color: #94A3B8;
+    /* Slightly darker grey */
+}
+
+/* The screenshot shows a very clean 3-column grid */
+.features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 0 1rem;
 }
 
 .feature-card {
-    /* Glassmorphism Card to match WisprFlow */
-    background: var(--surface-color);
+    background: #FFFFFF;
     border: 1px solid var(--surface-border);
-    padding: 2.5rem;
-    border-radius: var(--radius-md);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+    border-radius: 24px;
+    /* Larger radius */
+    padding: 2.5rem 2rem;
+    text-align: left;
+    /* Screenshot shows left align */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
 }
 
 .feature-card:hover {
-    background: var(--surface-hover);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.05);
+    border-color: #d1d5db;
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
 }
 
 .feature-card h3 {
     font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
+    margin-bottom: 1rem;
     color: var(--text-primary);
 }
 
 .feature-card p {
-    color: var(--text-secondary);
     font-size: 1rem;
+    color: var(--text-secondary);
     line-height: 1.6;
-}
-
-.icon {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
 }
 
 /* --- SEO Footer --- */
