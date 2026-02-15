@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoSherd - Instant Offline File Sharing</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="style.css">
-<meta name="description"
-    content="Share unlimited files instantly between PC, Android, and iOS. The fastest offline alternative to Snapdrop and LocalSend. No internet required. Secure local transfer.">
-<meta name="keywords"
-    content="lan drop, landrop, fast file sharing, large file sharing, without internet file share, pc to mobile transfer, wifi file transfer, offline share, snapdrop alternative, localsend alternative">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoSherd - Instant Offline File Sharing</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description"
+        content="Share unlimited files instantly between PC, Android, and iOS. The fastest offline alternative to Snapdrop and LocalSend. No internet required. Secure local transfer.">
+    <meta name="keywords"
+        content="lan drop, landrop, fast file sharing, large file sharing, without internet file share, pc to mobile transfer, wifi file transfer, offline share, snapdrop alternative, localsend alternative">
 </head>
 
 <body>
+
+    <!-- Background Elements -->
+    <div class="glow-bg"></div>
+    <div class="glow-purple"></div>
 
     <div class="container">
         <nav>
@@ -23,147 +28,147 @@
                     <polyline points="7 10 12 15 17 10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
-                LanDrop
+                NoSherd
             </div>
             <div class="nav-links">
                 <a href="#features">Features</a>
+                <a href="#how-it-works">How it Works</a>
             </div>
         </nav>
 
         <section class="hero">
-            <h1>NoSherd: Share Files<br>Without Internet.</h1>
-            <p>Transfer large files from PC to Mobile in seconds.<br>Completely offline. Secure. Unlimited speed.</p>
+            <h1>Share Files Directly.<br>Zero Cloud. Zero Setup.</h1>
+            <p>The fastest way to transfer large files between PC and Mobile completely offline. Secure peer-to-peer
+                sharing over your local WiFi.</p>
 
             <div class="cta-group">
-                <a href="NoSherd.zip" class="btn btn-primary" download>Download NoSherd for Windows</a>
+                <a href="NoSherd.zip" class="btn btn-primary" download>Download for Windows</a>
+                <a href="#features" class="btn btn-secondary">Learn More</a>
             </div>
 
             <div class="preview-container">
                 <div class="app-preview">
-                    <!-- HTML-based Mockup of the App -->
+                    <!-- HTML-based Mockup of the App with Glassmorphism -->
                     <div class="mock-window"
-                        style="background: #EFEEE9; border-radius: 12px; overflow: hidden; font-family: 'Outfit', sans-serif; display: flex; flex-direction: column; height: 600px; text-align: left;">
+                        style="background: #020408; font-family: 'Figtree', sans-serif; display: flex; flex-direction: column; height: 600px; text-align: left; position: relative;">
+
                         <!-- Mock Header -->
                         <div
-                            style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem;">
-                            <div style="display: flex; gap: 0.75rem; color: #111; font-weight: 600;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                            <div style="display: flex; gap: 0.75rem; color: #f1f5f9; font-weight: 600;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" style="color: #3b82f6;" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
                                     <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
                                     <polyline points="2 17 12 22 22 17"></polyline>
                                     <polyline points="2 12 12 17 22 12"></polyline>
                                 </svg>
-                                <span>Admin Dashboard</span>
+                                <span>NoSherd Admin</span>
                             </div>
-                            <div style="font-size: 0.85rem; color: #737373;">Receiver: <span
-                                    style="color: #FF4D00; font-weight: 600;">http://192.168.1.6:3000</span></div>
+                            <div
+                                style="font-size: 0.85rem; color: #94a3b8; background: rgba(255,255,255,0.05); padding: 0.3rem 0.8rem; border-radius: 100px;">
+                                <span style="color: #22c55e;">●</span> Connected: <span style="color: #f1f5f9;">Pixel 8
+                                    Pro</span>
+                            </div>
                         </div>
 
                         <!-- Mock Body -->
-                        <div style="display: flex; gap: 2rem; padding: 0 2rem 2rem; height: 100%;">
+                        <div
+                            style="display: flex; gap: 1.5rem; padding: 1.5rem; height: 100%; position: relative; overflow: hidden;">
 
                             <!-- Mock Sidebar -->
                             <div
-                                style="width: 280px; background: rgba(255,255,255,0.65); backdrop-filter: blur(20px); border-radius: 24px; padding: 1.5rem; border: 1px solid rgba(0,0,0,0.06); display: flex; flex-direction: column; gap: 1rem;">
+                                style="width: 260px; background: rgba(255,255,255,0.02); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 0.5rem;">
                                 <div
-                                    style="font-size: 0.8rem; text-transform: uppercase; color: #737373; font-weight: 600; letter-spacing: 0.05em;">
-                                    My Computer</div>
+                                    style="font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+                                    Drives</div>
                                 <div
-                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem; background:rgba(0,0,0,0.04); border-radius:12px; font-size:0.9rem; color:#111; font-weight:500;">
-                                    <span>💻</span> My Computer
-                                </div>
-                                <div
-                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem; border-radius:12px; font-size:0.9rem; color:#111;">
+                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 1rem; background:rgba(59, 130, 246, 0.1); border-radius:8px; font-size:0.9rem; color:#f1f5f9; border: 1px solid rgba(59, 130, 246, 0.2);">
                                     <span>💾</span> Local Disk (C:)
                                 </div>
                                 <div
-                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem; border-radius:12px; font-size:0.9rem; color:#111;">
+                                    style="display:flex; align-items:center; gap:0.75rem; padding:0.6rem 1rem; border-radius:8px; font-size:0.9rem; color:#94a3b8;">
                                     <span>💾</span> Data (D:)
                                 </div>
+
                                 <div
-                                    style="margin-top:auto; padding:1rem; background:white; border-radius:16px; text-align:center;">
-                                    <div style="font-size:2rem; margin-bottom:0.5rem;">🚀</div>
-                                    <div style="font-weight:600; font-size:0.9rem; color:#111;">Ready to Share</div>
+                                    style="margin-top:auto; padding:1.2rem; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); border-radius:16px; border: 1px solid rgba(255,255,255,0.05);">
+                                    <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.5rem;">Storage</div>
+                                    <div
+                                        style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 100px; overflow: hidden;">
+                                        <div style="width: 65%; height: 100%; background: #3b82f6;"></div>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Mock Main Content -->
-                            <div
-                                style="flex: 1; background: white; border-radius: 24px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.06);">
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem;">
+                                <!-- File 1 -->
                                 <div
-                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                                    <h2 style="font-size: 1.5rem; color: #111; margin: 0;">Currently Shared</h2>
-                                    <span
-                                        style="background: #EFEEE9; color: #737373; padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.85rem;">3
-                                        items</span>
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                                    <div
+                                        style="width: 48px; height: 48px; background: rgba(245, 158, 11, 0.1); color: #fbbf24; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path
+                                                d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500; color: #f1f5f9;">Project_Assets</div>
+                                        <div style="font-size: 0.8em; color: #64748b;">Folder • 24 items</div>
+                                    </div>
+                                    <div style="color: #3b82f6; font-size: 0.9rem; font-weight: 500;">Shared</div>
                                 </div>
 
-                                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                    <!-- File Item 1 -->
+                                <!-- File 2 -->
+                                <div
+                                    style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
                                     <div
-                                        style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                                        <div
-                                            style="width: 48px; height: 48px; background: #FFF7ED; color: #C2410C; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <path
-                                                    d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <div style="flex: 1;">
-                                            <div style="font-weight: 600; color: #111;">Projects</div>
-                                            <div style="font-size: 0.85rem; color: #737373;">Folder • 12 files</div>
-                                        </div>
-                                        <button
-                                            style="background: #111; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 100px; font-size: 0.8rem; cursor: pointer;">Share</button>
+                                        style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); color: #60a5fa; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                            <line x1="7" y1="2" x2="7" y2="22"></line>
+                                            <line x1="17" y1="2" x2="17" y2="22"></line>
+                                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        </svg>
                                     </div>
-                                    <!-- File Item 2 -->
-                                    <div
-                                        style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                                        <div
-                                            style="width: 48px; height: 48px; background: #F4F4F5; color: #18181B; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                                                <line x1="7" y1="2" x2="7" y2="22"></line>
-                                                <line x1="17" y1="2" x2="17" y2="22"></line>
-                                                <line x1="2" y1="12" x2="22" y2="12"></line>
-                                                <line x1="2" y1="7" x2="7" y2="7"></line>
-                                                <line x1="2" y1="17" x2="7" y2="17"></line>
-                                                <line x1="17" y1="17" x2="22" y2="17"></line>
-                                                <line x1="17" y1="7" x2="22" y2="7"></line>
-                                            </svg>
-                                        </div>
-                                        <div style="flex: 1;">
-                                            <div style="font-weight: 600; color: #111;">Movie_Night.mp4</div>
-                                            <div style="font-size: 0.85rem; color: #737373;">Video • 2.4 GB</div>
-                                        </div>
-                                        <button
-                                            style="background: #EF4444; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 100px; font-size: 0.8rem; cursor: pointer;">Remove</button>
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500; color: #f1f5f9;">4K_Footage_Raw.mp4</div>
+                                        <div style="font-size: 0.8em; color: #64748b;">Video • 4.2 GB</div>
                                     </div>
-                                    <!-- File Item 3 -->
+                                    <div style="color: #3b82f6; font-size: 0.9rem; font-weight: 500;">Shared</div>
+                                </div>
+
+                                <!-- Uploading Status -->
+                                <div
+                                    style="margin-top: auto; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 1rem; display: flex; align-items: center; gap: 1rem;">
                                     <div
-                                        style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border-radius: 16px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                                        <div
-                                            style="width: 48px; height: 48px; background: #F4F4F5; color: #18181B; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                                <polyline points="21 15 16 10 5 21"></polyline>
-                                            </svg>
-                                        </div>
-                                        <div style="font-weight: 600; color: #111; flex: 1;">Holiday_Photos.zip</div>
-                                        <button
-                                            style="background: #EF4444; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 100px; font-size: 0.8rem; cursor: pointer;">Remove</button>
+                                        style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid rgba(59, 130, 246, 0.3); border-top-color: #3b82f6; animation: spin 1s linear infinite;">
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 0.9rem; color: #f1f5f9; font-weight: 500;">Uploading
+                                            "Design_Mockup.psd"...</div>
+                                        <div style="font-size: 0.8rem; color: #94a3b8;">45 MB / 120 MB • 15 MB/s</div>
                                     </div>
                                 </div>
+                                <style>
+                                    @keyframes spin {
+                                        0% {
+                                            transform: rotate(0deg);
+                                        }
+
+                                        100% {
+                                            transform: rotate(360deg);
+                                        }
+                                    }
+                                </style>
+
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -171,14 +176,14 @@
         </section>
 
         <section id="features" class="features">
-            <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Why NoSherd?</h2>
+            <h2>Everything you need.<br>Nothing you don't.</h2>
 
             <div class="grid">
                 <div class="feature-card">
                     <span class="icon">⚡</span>
                     <h3>Lightning Fast</h3>
-                    <p>Direct peer-to-peer transfer over your LAN. No specialized servers or bottlenecks. Transfer
-                        gigabytes in seconds.</p>
+                    <p>Direct peer-to-peer transfer over your LAN. No specialized servers. Transfer gigabytes in
+                        seconds.</p>
                 </div>
                 <div class="feature-card">
                     <span class="icon">🔒</span>
@@ -188,8 +193,8 @@
                 </div>
                 <div class="feature-card">
                     <span class="icon">🎨</span>
-                    <h3>Warm Minimalist UI</h3>
-                    <p>Designed to be beautiful. A calm, clean interface that feels native and responsive on any device.
+                    <h3>Quiet Luxury UI</h3>
+                    <p>Designed to be invisible. A calm, clean interface that feels native and responsive on any device.
                     </p>
                 </div>
                 <div class="feature-card">
@@ -213,8 +218,8 @@
 
         <!-- SEO Footer Section -->
         <section class="seo-footer"
-            style="background: #f4f4f5; padding: 2rem; margin-top: 4rem; border-radius: 12px; font-size: 0.9rem; color: #52525b;">
-            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #18181b;">Popular Use Cases</h3>
+            style="background: rgba(2, 4, 8, 0.4); padding: 2rem; margin-top: 4rem; border-radius: 12px; font-size: 0.9rem; color: #64748b;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #f1f5f9;">Popular Use Cases</h3>
             <p style="margin-bottom: 0.5rem;"><strong>Send files over wifi without internet free:</strong> NoSherd
                 allows you to transfer unlimited data locally without using your mobile data plan.</p>
             <p style="margin-bottom: 0.5rem;"><strong>Browser based wifi file transfer:</strong> Works on Chrome, Edge,
@@ -223,13 +228,12 @@
                 easiest way to move photos and videos from your phone to your PC instantly.</p>
             <p style="margin-bottom: 0.5rem;"><strong>Local wifi file sharing web app:</strong> Secure, private, and
                 fast. Your data never leaves your home network.</p>
-            <p style="margin-bottom: 0.5rem;"><strong>Free airdrop alternative for windows browser:</strong> Experience
-                the simplicity of AirDrop on Windows and Android devices.</p>
         </section>
 
         <footer>
             <p>&copy; 2024 NoSherd. Open Source (MIT).</p>
         </footer>
+        <script src="script.js"></script>
     </div>
 </body>
 
