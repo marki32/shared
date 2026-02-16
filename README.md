@@ -37,5 +37,15 @@ A minimal, aesthetic local file sharing application. Share files instantly with 
 - **Frontend**: HTML5, CSS3, Vanilla JS
 - **Packaging**: Pkg
 
+## Troubleshooting
+
+### "Windows protected your PC" (SmartScreen Warning)
+Because NoSherd is a new open-source application, Windows SmartScreen may flag it as unrecognized. To run the app:
+
+1. Click **"More info"**.
+2. Click **"Run anyway"**.
+
+This warning will disappear once enough users have downloaded and run the application.
+
 ## License
 MIT

@@ -20,5 +20,8 @@
     "targets": [
       "node18-win-x64"
     ]
+  },
+  "devDependencies": {
+    "rcedit": "^5.0.2"
   }
 }
